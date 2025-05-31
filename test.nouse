@@ -1,0 +1,8 @@
+func greet {
+    return ("ok);
+}
+
+func main {
+    greet
+    return ();
+}
