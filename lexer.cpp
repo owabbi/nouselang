@@ -54,7 +54,7 @@ Token Lexer::nextToken()
     skipWhitespace();
 
     if (isAtEnd())
-        return Token{TokenType::EndOfFile, "", line};
+        return Token{TokenType::EndOfFile, ""};
 
     char c = advance();
 
@@ -62,17 +62,17 @@ Token Lexer::nextToken()
     switch (c)
     {
     case '(':
-        return Token{TokenType::LParen, "(", line};
+        return Token{TokenType::LParen, "("};
     case ')':
-        return Token{TokenType::RParen, ")", line};
+        return Token{TokenType::RParen, ")"};
     case '{':
-        return Token{TokenType::LBrace, "{", line};
+        return Token{TokenType::LBrace, "{"};
     case '}':
-        return Token{TokenType::RBrace, "}", line};
+        return Token{TokenType::RBrace, "}"};
     case ',':
-        return Token{TokenType::Comma, ",", line};
+        return Token{TokenType::Comma, ","};
     case ';':
-        return Token{TokenType::Semicolon, ";", line};
+        return Token{TokenType::Semicolon, ";"};
     case '"':
         return makeString();
     }
@@ -91,7 +91,7 @@ Token Lexer::nextToken()
         return makeIdentifierOrKeyword();
     }
 
-    return Token{TokenType::EndOfFile, "", line}; // fallback
+    return Token{TokenType::EndOfFile, ""}; // fallback
 }
 
 Token Lexer::makeIdentifierOrKeyword()
@@ -103,15 +103,15 @@ Token Lexer::makeIdentifierOrKeyword()
     }
 
     if (value == "func")
-        return Token{TokenType::Func, value, line};
+        return Token{TokenType::Func, value};
     if (value == "return")
-        return Token{TokenType::Return, value, line};
+        return Token{TokenType::Return, value};
     if (value == "shh")
         return Token{TokenType::Shh, value};
     if (value == "true" || value == "false")
-        return Token{TokenType::BoolLiteral, value, line};
+        return Token{TokenType::BoolLiteral, value};
 
-    return Token{TokenType::Identifier, value, line};
+    return Token{TokenType::Identifier, value};
 }
 
 Token Lexer::makeNumber()
@@ -121,7 +121,7 @@ Token Lexer::makeNumber()
     {
         value += advance();
     }
-    return Token{TokenType::IntLiteral, value, line};
+    return Token{TokenType::IntLiteral, value};
 }
 
 Token Lexer::makeString()
@@ -134,9 +134,9 @@ Token Lexer::makeString()
 
     if (isAtEnd())
     {
-        throwError("Missing closing quote (\") for string literal", line);
+        throwError("Missing closing quote (\") for string literal");
     }
 
     advance(); // skip closing quote
-    return Token{TokenType::StringLiteral, value, line};
+    return Token{TokenType::StringLiteral, value};
 }

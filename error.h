@@ -5,11 +5,8 @@
 #include <string>
 #include "utils.h"
 
-inline void throwError(const std::string& message, int line = -1) {
-    if (line >= 0)
-        throw std::runtime_error("Line " + std::to_string(line) + ": " + red(message));
-    else
-        throw std::runtime_error("Error: " + red(message));
+inline void throwError(const std::string& message) {
+    throw std::runtime_error("[NoUse Error] " + red(message));
 }
 
 #endif // ERROR_H
